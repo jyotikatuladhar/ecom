@@ -68,18 +68,6 @@ Accessible and keyboard-friendly UI (baseline)
 
 ## Architecture Overview
 
-The project follows a feature-based architecture with clear domain ownership.
-
-src/
- ├── app/                # Store setup, typed hooks
- ├── features/           # Redux slices & RTK Query APIs
- │    ├── catalog/
- │    ├── cart/
- │    ├── ui/
- ├── components/         # Reusable UI components
- ├── pages/              # Page-level components
- ├── types/              # Shared TypeScript models
-
 State Strategy
 
 Redux Toolkit for predictable global state
