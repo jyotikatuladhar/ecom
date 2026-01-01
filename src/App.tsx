@@ -1,14 +1,21 @@
-import { type JSX } from 'react'
+import { Outlet } from 'react-router'
 import './App.css'
-// import { Counter } from './features/counter/Counter'
+import { useEffect } from 'react'
 import CatalogPage from './pages/CatalogPage'
-function App(): JSX.Element {
+
+const AppLayout = () => {
 
   return (
-    <div>
-      <CatalogPage />
-    </div>
+    <>
+      {/* Structure for Global layout */}
+      {/* Header */}
+      <header>
+        Page Header
+      </header>
+      <Outlet />
+      {/* Add any global modal or toasts here */}
+    </>
   )
 }
 
-export default App
+export default AppLayout
