@@ -7,7 +7,7 @@ export const Navbar = () => {
         <div className={styles.topNavbar}>
             {/* Top Navigation */}
             <div className={`container ${styles.topInner}`}>
-                <span>USD</span>
+                <span>USD | CAD</span>
                 <div className={styles.account}>
                     <a className={styles.signin}>Sign in</a>
                     <a className={styles.signup}>Create an account</a>
