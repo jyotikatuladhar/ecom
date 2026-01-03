@@ -1,0 +1,24 @@
+:root {
+    /* Base Colors */
+    --color-bg: 255 255 255;
+    --color-bg-muted: 248 250 252;
+
+    --color-text: 17 24 39;
+    --color-text-muted: 107 114 128;
+
+    --color-border: 229 231 235;
+
+    /*  Brand  */
+    --color-primary: 37 99 235;
+    --color-primary-hover: 29 78 216;
+
+    /*  Info States  */
+    --color-success: 22 163 74;
+    --color-warning: 202 138 4;
+    --color-danger: 220 38 38;
+
+    /*  Radius  */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}

@@ -1,9 +1,8 @@
 import { createHashRouter } from "react-router-dom";
 import CatalogPage from "./pages/CatalogPage";
-import AppLayout from "./App";
+import AppLayout from "./layouts/AppLayout";
 import NotFoundPage from "./pages/NotFoundPage";
 
-console.log("Router Loaded ")
 export const router = createHashRouter([
     {
         path: "/",

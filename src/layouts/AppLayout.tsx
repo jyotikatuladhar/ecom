@@ -1,7 +1,5 @@
 import { Outlet } from 'react-router'
-import './App.css'
-import { useEffect } from 'react'
-import CatalogPage from './pages/CatalogPage'
+import { Navbar } from './Navbar/Navbar'
 
 const AppLayout = () => {
 
@@ -10,9 +8,12 @@ const AppLayout = () => {
       {/* Structure for Global layout */}
       {/* Header */}
       <header>
-        Page Header
+        <Navbar />
       </header>
-      <Outlet />
+
+      <main className='container'>
+        <Outlet />
+      </main>
       {/* Add any global modal or toasts here */}
     </>
   )

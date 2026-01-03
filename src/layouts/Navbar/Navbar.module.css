@@ -1,0 +1,41 @@
+@reference "tailwindcss";
+
+.navbar {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    /* height: 64px; */
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-orange-50);
+}
+
+.topNavbar {
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    font-size: small;
+}
+
+.topInner {
+    @apply flex justify-between;
+}
+
+.signin {
+    margin-right: 16px;
+}
+
+/* .signup {
+    margin-right: 10px;
+} */
+
+.secondaryNavbar {
+    @apply h-12 flex justify-between items-center shadow-sm;
+}
+
+.logo {
+    @apply font-bold text-2xl p-2 text-shadow-2xs
+}
+
+.shoppingCart {
+    @apply flex gap-1 p-2 cursor-pointer bg-gray-50 rounded-md hover:bg-gray-200 hover:text-gray-500 transition duration-300
+}

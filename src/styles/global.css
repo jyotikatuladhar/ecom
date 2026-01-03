@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@config "../../tailwind.config.cjs";
+
+* {
+  box-sizing: border-box;
+}
+
+body {  
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  /* color: rgb(var(--color-text));
+  background: rgb(var(--color-bg)); */
+}
+
+.container {
+  @apply mx-auto max-w-7xl px-4 md:px-6 lg:px-8
+}
+
+/* @media (min-width : 768px) {
+  .container {
+    padding-inline: var(--container-padding-md);
+  }
+}
+
+@media (min-width : 1024px) {
+  .container {
+    padding-inline: var(--container-padding-lg);
+  }
+} */
