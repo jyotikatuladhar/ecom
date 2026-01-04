@@ -1,3 +1,4 @@
+import { ProductGrid } from "../../components/ProductGrid/ProductGrid";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 
 const CatalogPage = () => {
@@ -6,6 +7,7 @@ const CatalogPage = () => {
         <section >
             <SearchBar />
             {/* Catalog Page */}
+            <ProductGrid />
         </section>
     </>
 }
