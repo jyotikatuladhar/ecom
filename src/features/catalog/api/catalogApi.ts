@@ -13,7 +13,7 @@ const catalogApi = baseApi.injectEndpoints({
             },
             providesTags: ["Category"]
         }),
-        categoryProducts: builder.query<ProductList, void>({
+        categoryProducts: builder.query<ProductList, string>({
             query: (slug) => `products/category/${slug}`,
             transformResponse: (response: ProductListResponseDto) => {
                 // console.log('products response: ', response);

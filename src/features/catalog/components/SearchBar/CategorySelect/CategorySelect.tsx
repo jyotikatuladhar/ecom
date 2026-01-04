@@ -6,7 +6,7 @@ import { useCategoryListQuery, useLazyCategoryProductsQuery } from "@/features/c
 export const CategorySelect = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const { data: categories } = useCategoryListQuery({});
+    const { data: categories } = useCategoryListQuery();
     const [triggerCategoryProducts, { data: categoryProducts }] = useLazyCategoryProductsQuery()
 
     useEffect(() => {
@@ -19,9 +19,9 @@ export const CategorySelect = () => {
         return () => document.removeEventListener('mousedown', handler)
     }, [])
 
-    useEffect(() => {
-        console.log('categoryProducts: ', categoryProducts);
-    }, [categoryProducts])
+    // useEffect(() => {
+    //     console.log('categoryProducts: ', categoryProducts);
+    // }, [categoryProducts])
 
     const handleMenuClick = (slug: string) => {
         console.log('slug: ', slug);
