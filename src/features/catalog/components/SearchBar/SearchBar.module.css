@@ -1,0 +1,8 @@
+@reference "tailwindcss";
+
+@layer components {
+    .wrapper {
+        @apply flex justify-between items-center mt-3
+    }
+
+}

@@ -74,7 +74,7 @@ export const incrementIfOdd = (amount: number): AppThunk => {
 }
 
 export const incrementAsync = createAsyncThunk(
-    'counter1/fetchCount',
+    'counter/fetchCount',
     async (amount: number) => {
         const response = await fetchCount(amount);
         // The data returned here becomes the 'fulfilled' action payload

@@ -1,0 +1,9 @@
+/* @reference "tailwindcss"; */
+
+.search {
+    padding: 4px;
+    outline: none;
+    width: 300px;
+    /* width: 100%; */
+    /* flex: 1; */
+}

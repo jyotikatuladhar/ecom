@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router'
 import { Navbar } from './Navbar/Navbar'
+// import { SearchBar } from '@/features/catalog/components/SearchBar/SearchBar'
 
 const AppLayout = () => {
 
@@ -10,6 +11,7 @@ const AppLayout = () => {
       <header>
         <Navbar />
       </header>
+      {/* <SearchBar /> */}
 
       <main className='container'>
         <Outlet />

@@ -1,6 +1,6 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
-import { baseApi } from "@/services/baseApi";
+import { baseApi } from "@/app/api/baseApi";
 import { rootReducer } from "./rootReducer";
 
 //import and add reducer to configure store

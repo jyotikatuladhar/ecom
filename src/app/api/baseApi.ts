@@ -11,6 +11,6 @@ export const baseApi = createApi({
         //     return headers;
         // },
     }),
-    tagTypes: ['User', 'Product', 'Cart', 'Categories'],
-    endpoints: () => ({}), // endpoints injected per feature productApi, userApi
+    tagTypes: ['User', 'Product', 'Cart', 'Category'],
+    endpoints: () => ({}), // endpoints injected per feature catalogApi, userApi
 });

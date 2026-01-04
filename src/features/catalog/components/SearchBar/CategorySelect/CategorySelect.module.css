@@ -1,0 +1,54 @@
+/* @reference "tailwindcss/utilities"
+
+@layer components {
+   
+} */
+
+.dropdown {
+    width: 300px;
+    position: relative;
+}
+
+.dropdown:hover {
+    cursor: pointer;
+}
+
+.link {
+    padding: 12px;
+    font-weight: 500;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.dropdownMenu {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: calc(100% + 0.25rem);
+    /* background-color: white; */
+    /* padding: 0.75rem; */
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+    pointer-events: none;
+    height: 400px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+}
+
+.dropdown.active>.link+.dropdownMenu {
+    opacity: 1;
+    transform: translateY(0px);
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.dropdownMenu>li {
+    /* cursor: pointer; */
+    padding: 1rem;
+}

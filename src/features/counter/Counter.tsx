@@ -2,7 +2,7 @@ import { useEffect, useState, type JSX } from "react";
 import styles from "./Counter.module.css"
 import { increment, decrement, incrementAsync, incrementByAmount, incrementIfOdd, selectCount, selectStatus, } from "./counterSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { useLazyProductDetailQuery, useProductDetailQuery, useProductsListQuery } from "@/services/productApi";
+// import { useLazyProductDetailQuery, useProductDetailQuery, useProductsListQuery } from "@/features/product/api/productApi";
 
 export function Counter(): JSX.Element {
     const dispatch = useAppDispatch();
@@ -11,23 +11,8 @@ export function Counter(): JSX.Element {
     const [incrementAmount, setIncrementAmount] = useState<string>("2");
 
     const incrementValue = Number(incrementAmount) || 0;
-    // const { data, isLoading } = useProductsListQuery({});
-    const [triggerProductDetail, { data, isFetching }] = useLazyProductDetailQuery();
-    // useEffect(() => {
-    //     if (!isLoading) {
-    //         console.log(data);
-    //     }
-    // }, [data])
-
-    useEffect(() => {
-        // if (!isFetching) {
-        console.log('isFetching: ', isFetching);
-        console.log(data);
-        // }
-    }, [data])
 
     return <div>
-        <button onClick={() => triggerProductDetail("1")} >Get Product 1</button>
         {/* Row of input + -  collection */}
         <div className={styles.row}>
             <button className={styles.button}

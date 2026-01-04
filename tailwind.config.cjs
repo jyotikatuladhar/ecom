@@ -4,6 +4,18 @@ export default {
         './index.html',
         './src/**/*.{js,ts,jsx,tsx}',
     ],
+    safelist: [
+        'text-primary',
+        'text-textMuted',
+        'text-white',
+        'bg-primary',
+        'bg-primary-hover',
+        'bg-bg',
+        'bg-bgMuted',
+        'border-primary',
+        'border-border',
+        'bg-gray-100'
+    ],
     theme: {
         extend: {
             colors: {

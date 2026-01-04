@@ -8,10 +8,11 @@
 
     --color-border: 229 231 235;
 
-    /*  Brand  */
-    --color-primary: 37 99 235;
-    --color-primary-hover: 29 78 216;
-
+    /* Brand (Green) */
+    --color-primary: 129 175 59;
+    /* #7fad39 */
+    --color-primary-hover: 107 154 48;
+    /* darker hover */
     /*  Info States  */
     --color-success: 22 163 74;
     --color-warning: 202 138 4;
