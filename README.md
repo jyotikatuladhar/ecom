@@ -90,11 +90,13 @@ Redux Toolkit
 
 RTK Query
 
+Design Tools : TailwindCSS, CSS Modules, AntDesign
+
 Vite
 
 DummyJSON API (mock backend)
 
-Vitest (basic test coverage planned)
+Vitest & React Testing Library (basic test coverage planned)
 
 ## API Strategy
 
@@ -158,9 +160,9 @@ No backend or authentication to avoid diluting frontend signal
 
 These tradeoffs are documented and can be discussed during interviews.
 
-🚧 Project Status
+Project Status
 
-Status: 🚀 In active development
+Status: In active development
 Current focus: Catalog, search, and state architecture
 Next steps: Cart flow, performance tuning, documentation polish
 
@@ -169,7 +171,7 @@ Commits are made incrementally to reflect real development progress.
 ## Author
 
 Jyotika Tara Tuladhar
-Senior Frontend Engineer — React & TypeScript
+Senior Frontend Engineer ( React & TypeScript )
 Focused on building scalable, user-centric web applications.
 
 ## License
