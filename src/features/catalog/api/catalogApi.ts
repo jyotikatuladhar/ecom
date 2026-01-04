@@ -1,26 +1,48 @@
 import { baseApi } from "@/app/api/baseApi";
 import type { CategoryListResponseDto, ProductListResponseDto } from "./catalog.dto";
-import { mapCategoryDtoToCategory } from "./catalog.mapper";
+import { mapCategoryDtoToCategory, mapProductDtoToProduct } from "./catalog.mapper";
+import type { Category, ProductList } from "./catalog.model";
 
 const catalogApi = baseApi.injectEndpoints({
     endpoints: builder => ({
-        categoryList: builder.query({
+        categoryList: builder.query<Category[], void>({
             query: () => "/products/categories",
             transformResponse: (response: CategoryListResponseDto) => {
-                console.log('list response: ', response);
+                // console.log('list response: ', response);
                 return response.map(mapCategoryDtoToCategory)
             },
             providesTags: ["Category"]
         }),
-        categoryProducts: builder.query({
+        categoryProducts: builder.query<ProductList, void>({
             query: (slug) => `products/category/${slug}`,
             transformResponse: (response: ProductListResponseDto) => {
-                console.log('products response: ', response);
-                return response;
+                // console.log('products response: ', response);
+                return {
+                    items: response.products.map(mapProductDtoToProduct),
+                    pagination: {
+                        total: response.total,
+                        limit: response.limit,
+                        skip: response.skip
+                    }
+                }
             },
             providesTags: ["Product"]
+        }),
+        productList: builder.query<ProductList, void>({
+            query: () => 'products',
+            transformResponse: (response: ProductListResponseDto) => {
+                // console.log('products response: ', response);
+                return {
+                    items: response.products.map(mapProductDtoToProduct),
+                    pagination: {
+                        total: response.total,
+                        limit: response.limit,
+                        skip: response.skip
+                    }
+                }
+            }
         })
     })
 })
 
-export const { useCategoryListQuery, useLazyCategoryProductsQuery } = catalogApi;
+export const { useCategoryListQuery, useLazyCategoryProductsQuery, useProductListQuery } = catalogApi;

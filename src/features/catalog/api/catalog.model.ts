@@ -1,10 +1,14 @@
 
-// category and categorydto doesnt have any difference in field names
-export type Category = {
-    slug: string;
-    categoryName: string;
-    url: string;
-};
+export interface Pagination {
+    total: number,
+    skip: number,
+    limit: number
+}
+
+export interface ProductList {
+    items: Product[],
+    pagination: Pagination
+}
 
 export interface Product {
     id: number;
@@ -48,3 +52,10 @@ type Dimension = {
     height: number,
     depth: number
 }
+
+// category and categorydto doesnt have any difference in field names
+export type Category = {
+    slug: string;
+    categoryName: string;
+    url: string;
+};
