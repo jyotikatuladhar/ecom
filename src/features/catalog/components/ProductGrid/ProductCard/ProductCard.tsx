@@ -3,19 +3,28 @@ import { Button } from "antd"
 import styles from "./ProductCard.module.css"
 import { HeartIcon, Share2Icon, ShareIcon, ShoppingCartIcon } from "lucide-react"
 import type { Product } from "@/features/catalog/api/catalog.model"
-// { product }: { product: Product }
 
-export const ProductCard = () => {
+type ProductCardProps = {
+    product: Product
+}
+
+export const ProductCard = ({ product }: ProductCardProps) => {
+    // console.log('product: ', product);
+
     return <div className={styles.wrapper}>
         {/* Image and Actions Section */}
         <div className={styles.imageWrapper}>
             {/* Image Section */}
-            <div>
-                <img src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp" alt="" />
+            <div className={styles.image}>
+                <img src={product.image} alt={`Image of ${product.productName}`} />
             </div>
-            <div className={styles.discount}>
-                -20%
-            </div>
+            {
+                product.discountPercent
+                    ? <div className={styles.discount}>
+                        -{product.discountPercent}%
+                    </div>
+                    : null
+            }
 
             {/* Animated Buttons Section */}
             <div className={styles.actionButtons}>
@@ -31,14 +40,19 @@ export const ProductCard = () => {
         {/* Product Detail Section */}
         <div className={styles.productDetail}>
             {/* Category */}
-            <div className="text-textMuted">Category</div>
+            <div className={`text-textMuted ${styles.category}`}>{product.category}</div>
             {/* Name */}
-            <div className="text-lg font-bold">
-                Name
+            <div className="font-bold">
+                {product.productName}
             </div>
             {/* price */}
             <div>
-                $0
+                <span className={styles.price}>${product.price}</span>
+                {
+                    product.discountPercent
+                        ? <span className={`${styles.originalPrice} text-textMuted`}>${product.originalPrice}</span>
+                        : null
+                }
             </div>
         </div>
     </div>

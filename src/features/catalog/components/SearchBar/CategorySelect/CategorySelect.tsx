@@ -1,13 +1,14 @@
 import { ChevronDown, Menu } from "lucide-react"
 import styles from "./CategorySelect.module.css"
 import { useEffect, useRef, useState } from "react"
-import { useCategoryListQuery, useLazyCategoryProductsQuery } from "@/features/catalog/api/catalogApi";
+import { useGetCategoriesQuery } from "@/features/catalog/api/catalogApi";
+import { Link } from "react-router-dom";
+import type { Category } from "@/features/catalog/api/catalog.model";
 
 export const CategorySelect = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const { data: categories } = useCategoryListQuery();
-    const [triggerCategoryProducts, { data: categoryProducts }] = useLazyCategoryProductsQuery()
+    const { data: categories } = useGetCategoriesQuery();
 
     useEffect(() => {
         const handler = (e: MouseEvent) => {
@@ -19,15 +20,18 @@ export const CategorySelect = () => {
         return () => document.removeEventListener('mousedown', handler)
     }, [])
 
-    // useEffect(() => {
-    //     console.log('categoryProducts: ', categoryProducts);
-    // }, [categoryProducts])
-
-    const handleMenuClick = (slug: string) => {
-        console.log('slug: ', slug);
-        triggerCategoryProducts(slug)
+    const handleMenuClick = () => {
         setOpen(false);
     }
+
+    const ListItem = ({ category }: { category: Category }) => (<li role="menuitem" key={category.slug}
+        onClick={handleMenuClick} >
+        <Link
+            to={`/category/${category.slug}`}
+            className="w-full block px-4 py-3 hover:cursor-pointer hover:shadow-md hover:font-bold transition-all">
+            {category.categoryName}
+        </Link>
+    </li>)
 
     return <div className={`${styles.dropdown} ${open ? styles.active : ""} `} ref={dropdownRef} >
         <button type="button"
@@ -44,15 +48,8 @@ export const CategorySelect = () => {
         </button>
         <ul role="menu" className={styles.dropdownMenu}>
             {
-                categories?.map(item => {
-                    return <li role="menuitem"
-                        onClick={() => handleMenuClick(item.slug)} className="hover:cursor-pointer hover:shadow-md hover:font-bold transition-all" key={item.slug} >
-                        {item.categoryName}
-                    </li>
-                })
+                categories?.map(category => <ListItem category={category} />)
             }
         </ul>
-
     </div >
-
 }

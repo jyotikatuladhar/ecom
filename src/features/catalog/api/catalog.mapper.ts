@@ -18,6 +18,7 @@ export const mapProductDtoToProduct = (dto: ProductDto): Product => {
         originalPrice: hasDiscount
             ? Math.round(dto.price / (1 - dto.discountPercentage / 100))
             : undefined,
+        discountPercent: dto.discountPercentage,
         rating: dto.rating,
         reviewCount: dto.reviews.length,
 
