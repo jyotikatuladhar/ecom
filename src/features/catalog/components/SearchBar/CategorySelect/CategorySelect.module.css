@@ -39,6 +39,8 @@
     overflow-y: scroll;
     scrollbar-width: thin;
     scroll-behavior: smooth;
+    z-index: 500;
+    background-color: white;
 }
 
 .dropdown.active>.link+.dropdownMenu {
@@ -48,7 +50,7 @@
     cursor: pointer;
 }
 
+/* 
 .dropdownMenu>li {
-    /* cursor: pointer; */
     padding: 1rem;
-}
+} */

@@ -9,6 +9,7 @@ export const router = createHashRouter([
         element: <AppLayout />,
         children: [
             { index: true, element: <CatalogPage /> },
+            { path: "/category/:slug", element: <CatalogPage /> },
             { path: "*", element: <NotFoundPage /> }
         ]
     }
