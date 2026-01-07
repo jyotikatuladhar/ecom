@@ -7,7 +7,8 @@ type ProductListArgs = {
     category?: string,
     limit?: number,
     skip?: number,
-    search?: string
+    search?: string,
+    searchParams?: URLSearchParams
 }
 
 const catalogApi = baseApi.injectEndpoints({
@@ -21,9 +22,18 @@ const catalogApi = baseApi.injectEndpoints({
             providesTags: ["Category"]
         }),
         getProducts: builder.query<ProductList, ProductListArgs>({
-            query: ({ category }) => {
-                if (category) return `products/category/${category}`;
-                else return 'products'
+            query: ({ category, searchParams }) => {
+                // add cases if other filters are added
+                const url = category
+                    ? `products/category/${category}`
+                    : 'products'
+                if (searchParams) {
+                    return {
+                        url,
+                        params: searchParams
+                    }
+                }
+                else return url;
             },
             transformResponse: (response: ProductListResponseDto) => {
                 // console.log('products response: ', response);

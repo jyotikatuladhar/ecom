@@ -2,14 +2,36 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: auto;
+    margin-top: 18px;
+}
+
+.header {
+    grid-column: 3/-1;
+    /* padding-bottom: 12px; */
+    margin-left: 1.5rem;
+    padding-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.headerTitle {
+    font-weight: 500;
+    font-size: x-large;
+    width: fit-content;
+    border-bottom: 4px solid rgba(var(--color-primary));
+    text-transform: capitalize;
 }
 
 .filters {
     grid-column: 2span;
+    font-weight: 500;
+    ;
 }
 
 .products {
     grid-column: 3/-1;
+    border-left: solid 1px #ddd;
 }
 
 @media (max-width: 768px) {

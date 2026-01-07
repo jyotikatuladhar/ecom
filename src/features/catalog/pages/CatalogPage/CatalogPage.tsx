@@ -3,26 +3,48 @@ import { useLazyGetProductsQuery } from "../../api/catalogApi";
 import { ProductGrid } from "../../components/ProductGrid/ProductGrid";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import styles from "./CatalogPage.module.css"
 import { EmptyState } from "@/components/EmptyState";
+import { Button, Dropdown, Menu, type MenuProps } from "antd";
+import { SortAscendingOutlined, SortDescendingOutlined, FilterOutlined } from "@ant-design/icons";
+
+type QueryData = { category?: string, searchParams?: URLSearchParams };
 
 const CatalogPage = () => {
     let content: React.ReactNode;
 
-    const { slug } = useParams();
+    const { slug: category } = useParams();
+    const [searchParams] = useSearchParams();
 
     const [triggerProductList, productListResult] = useLazyGetProductsQuery();
     const { data, isLoading, isUninitialized, } = productListResult;
 
-
     useEffect(() => {
-        if (slug) {
-            triggerProductList({ category: slug });
-        } else {
-            triggerProductList({});
+        const queryData = getQueryData({ category, searchParams })
+        triggerProductList(queryData);
+    }, [category, searchParams])
+
+    const getQueryData = ({ category, searchParams }: QueryData): QueryData => {
+        let query = {};
+        if (category && searchParams) {
+            query = {
+                category: category,
+                searchParams
+            }
         }
-    }, [slug])
+        else if (searchParams) {
+            query = {
+                searchParams
+            }
+        } else if (category) {
+            query = {
+                category: category
+            }
+        }
+        // Default is all products listing query 'products'
+        return query
+    }
 
     if (isUninitialized) {
         content = <EmptyState />
@@ -34,15 +56,56 @@ const CatalogPage = () => {
         content = <EmptyState />
     }
 
+
+    const handleMenuClick: MenuProps['onClick'] = (e) => {
+        // message.info('Click on menu item.');
+        console.log('click', e);
+    };
+
+    const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // message.info('Click o  n left button.');
+        console.log('click left button', e);
+    };
+
+    const items: MenuProps['items'] = [
+        {
+            label: 'Price: Low To High',
+            key: '1',
+            icon: <SortAscendingOutlined />,
+        },
+        {
+            label: 'Price: High To Low',
+            key: '4',
+            icon: <SortDescendingOutlined />,
+            danger: true,
+            // disabled: true,
+        },
+    ];
+
+    const menuProps: MenuProps = {
+        items,
+        theme: 'light',
+        onClick: handleMenuClick,
+    };
+
     return <>
         <section >
             <SearchBar />
             {/* Catalog Page */}
-            <h1 className=" font-semibold capitalize text-2xl mt-4 pb-3 border-b-primary ">
-                {slug?.replace("-", " ")}
-            </h1>
             <div className={styles.catalogLayout}>
                 {/* Filters Section  */}
+                <div className={styles.header}>
+                    <h1 className={styles.headerTitle}>
+                        {category?.replace("-", " ")}
+                    </h1>
+                    <Dropdown menu={menuProps} trigger={['hover']} >
+                        <Button onClick={handleButtonClick} type="primary"
+                            icon={<FilterOutlined />} iconPlacement="end"
+                        >
+                            Sort By
+                        </Button>
+                    </Dropdown>
+                </div>
                 <aside className={styles.filters}>
                     Filters
                 </aside>
