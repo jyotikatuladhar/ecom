@@ -25,6 +25,7 @@ export default {
                 textMuted: 'rgb(var(--color-text-muted) / <alpha-value>)',
                 border: 'rgb(var(--color-border) / <alpha-value>)',
                 primary: 'rgb(var(--color-primary) / <alpha-value>)',
+                primary: 'rgb(var(--color-primary) / <alpha-value>)',
                 primaryHover: 'rgb(var(--color-primary-hover) / <alpha-value>)',
                 success: 'rgb(var(--color-success) / <alpha-value>)',
                 warning: 'rgb(var(--color-warning) / <alpha-value>)',
