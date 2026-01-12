@@ -27,29 +27,7 @@ export function AntdProvider({ children }: { children: React.ReactNode }) {
                     colorPrimaryHover: 'rgb(var(--color-primary-hover))',
                     colorPrimaryActive: 'rgb(var(--color-primary-hover))',
                     colorTextLightSolid: '#ffffff',
-                },
-                Dropdown: {
-                    colorPrimary: 'rgb(var(--color-primary))',
-                    colorPrimaryHover: 'rgb(var(--color-primary-hover))',
-                    colorPrimaryActive: 'rgb(var(--color-primary-hover))',
-                    colorTextLightSolid: '#ffffff',
-                    controlItemBgActive: 'rgb(var(--color-bg-muted))',
-                    controlItemBgHover: 'rgb(var(--color-primary))',
-                    controlItemBgActiveHover: '#ffffff',
-                    colorBgBase: '#ffffff',
-                    controlItemBgActiveDisabled: '#ffffff',
-
-                },
-                Menu: {
-                    colorPrimary: 'rgb(var(--color-primary))',
-                    colorPrimaryHover: 'rgb(var(--color-primary-hover))',
-                    colorPrimaryActive: 'rgb(var(--color-primary-hover))',
-                    colorTextLightSolid: '#ffffff',
-                    controlItemBgActive: 'rgb(var(--color-bg-muted))',
-                    itemSelectedBg: 'rgb(var(--color-bg-muted)) ',
-                    itemBg: "#ffffff"
-
-                },
+                }
             }
         }
         } >

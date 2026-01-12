@@ -3,17 +3,19 @@ import { useLazyGetProductsQuery } from "../../api/catalogApi";
 import { ProductGrid } from "../../components/ProductGrid/ProductGrid";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import React, { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styles from "./CatalogPage.module.css"
 import { EmptyState } from "@/components/EmptyState";
 import { Button, Dropdown, Menu, type MenuProps } from "antd";
 import { SortAscendingOutlined, SortDescendingOutlined, FilterOutlined } from "@ant-design/icons";
+import { ArrowBigUp, ArrowUp, ArrowUp01Icon, SortAscIcon, SortDescIcon } from "lucide-react";
 
 type QueryData = { category?: string, searchParams?: URLSearchParams };
+type SearchParams = { sortBy: string, order: string };
 
 const CatalogPage = () => {
     let content: React.ReactNode;
-
+    const navigate = useNavigate();
     const { slug: category } = useParams();
     const [searchParams] = useSearchParams();
 
@@ -57,36 +59,37 @@ const CatalogPage = () => {
     }
 
 
-    const handleMenuClick: MenuProps['onClick'] = (e) => {
-        // message.info('Click on menu item.');
-        console.log('click', e);
+    const handleMenuClick = (params: SearchParams) => {
+        try {
+            const searchParams: URLSearchParams = new URLSearchParams();
+            Object.entries(params)?.map(([name, value]) => searchParams.set(name, value))
+            navigate(`?${searchParams.toString()}`)
+        } catch (error) {
+            console.error(error)
+        }
     };
 
-    const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        // message.info('Click o  n left button.');
-        console.log('click left button', e);
-    };
-
-    const items: MenuProps['items'] = [
+    const items = [
         {
             label: 'Price: Low To High',
             key: '1',
-            icon: <SortAscendingOutlined />,
+            icon: <SortAscIcon />,
+            params: {
+                order: 'asc',
+                sortBy: 'price'
+            }
         },
         {
             label: 'Price: High To Low',
             key: '4',
-            icon: <SortDescendingOutlined />,
+            icon: <SortDescIcon />,
             danger: true,
-            // disabled: true,
+            params: {
+                order: 'desc',
+                sortBy: 'price'
+            }
         },
     ];
-
-    const menuProps: MenuProps = {
-        items,
-        theme: 'light',
-        onClick: handleMenuClick,
-    };
 
     return <>
         <section >
@@ -98,13 +101,25 @@ const CatalogPage = () => {
                     <h1 className={styles.headerTitle}>
                         {category?.replace("-", " ")}
                     </h1>
-                    <Dropdown menu={menuProps} trigger={['hover']} >
+                    <div className={styles.sortMenu}>
+                        {/* Sort dropdown section */}
+                        <button className={`btn ${styles.sortBy}`}>Sort By</button>
+                        <div className={styles.sortOptions}>
+                            {/* items  */}
+                            <ul>
+                                {items.map(menuItem => <li
+                                    onClick={() => handleMenuClick(menuItem.params)} className="w-full px-2 py-3 hover:cursor-pointer hover:shadow-md hover:font-semibold transition-all">
+                                    <span className="flex gap-2">{menuItem.icon} {menuItem.label}</span></li>)}
+                            </ul>
+                        </div>
+                    </div>
+                    {/* <Dropdown menu={menuProps} trigger={['hover']} >
                         <Button onClick={handleButtonClick} type="primary"
                             icon={<FilterOutlined />} iconPlacement="end"
                         >
                             Sort By
                         </Button>
-                    </Dropdown>
+                    </Dropdown> */}
                 </div>
                 <aside className={styles.filters}>
                     Filters

@@ -43,3 +43,29 @@
         grid-column: 1/-1;
     }
 }
+
+.sortMenu {
+    position: relative;
+}
+
+.sortOptions {
+    position: absolute;
+    width: max-content;
+    top: calc(100% + 0.15rem);
+    left: -150%;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: transform 150ms ease-in;
+    z-index: 50;
+}
+
+.sortBy:focus+.sortOptions {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.sortOptions>ul>li {
+    padding: 8px 10px;
+    background: white;
+
+}
