@@ -47,8 +47,27 @@ const catalogApi = baseApi.injectEndpoints({
                 }
             },
             providesTags: ["Product"]
+        }),
+        searchProducts: builder.query<ProductList, ProductListArgs>({
+            query: ({ searchParams }) => {
+                return {
+                    url: 'products/search',
+                    params: searchParams
+                }
+            },
+            transformResponse: (response: ProductListResponseDto) => {
+                console.log('response: ', response);
+                return {
+                    items: response.products.map(mapProductDtoToProduct),
+                    pagination: {
+                        total: response.total,
+                        limit: response.limit,
+                        skip: response.skip
+                    }
+                }
+            }
         })
     })
 })
 
-export const { useGetCategoriesQuery, useLazyGetProductsQuery, } = catalogApi;
+export const { useGetCategoriesQuery, useLazyGetProductsQuery, useLazySearchProductsQuery } = catalogApi;

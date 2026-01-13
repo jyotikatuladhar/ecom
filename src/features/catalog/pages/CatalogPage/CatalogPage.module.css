@@ -48,15 +48,22 @@
     position: relative;
 }
 
+.sortBy:hover {
+    cursor: pointer;
+}
+
 .sortOptions {
     position: absolute;
     width: max-content;
-    top: calc(100% + 0.15rem);
+    top: 100%;
     left: -150%;
     opacity: 0;
     transform: translateY(-10px);
     transition: transform 150ms ease-in;
     z-index: 50;
+    border: 1px solid #ddd;
+    box-shadow: #838282;
+    border-radius: 8px;
 }
 
 .sortBy:focus+.sortOptions {
@@ -68,4 +75,9 @@
     padding: 8px 10px;
     background: white;
 
+}
+
+.sortOptions>ul>li:hover {
+    background: rgb(230, 230, 230);
+    ;
 }

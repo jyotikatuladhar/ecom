@@ -27,6 +27,10 @@ export function AntdProvider({ children }: { children: React.ReactNode }) {
                     colorPrimaryHover: 'rgb(var(--color-primary-hover))',
                     colorPrimaryActive: 'rgb(var(--color-primary-hover))',
                     colorTextLightSolid: '#ffffff',
+                },
+                Input: {
+                    activeBorderColor: 'rgb(var(--color-primary))',
+                    hoverBorderColor: 'rgb(var(--color-primary))',
                 }
             }
         }
