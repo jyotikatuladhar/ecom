@@ -1,9 +1,37 @@
 /* @reference "tailwindcss"; */
 
-.search {
+.searchBox {
+    position: relative;
+
+}
+
+.searchInput {
     padding: 4px;
     outline: none;
-    width: 300px;
+    width: 400px;
     /* width: 100%; */
     /* flex: 1; */
+}
+
+.searchOptions {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: transform 150ms ease-in;
+    padding: 10px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+.searchBox.active>.searchOptions {
+    opacity: 1;
+    transform: scaleY(0px);
+    background-color: white;
+    z-index: 50;
 }
