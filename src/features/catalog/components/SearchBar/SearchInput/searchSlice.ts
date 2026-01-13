@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction, Slice } from "@reduxjs/toolkit";
 import type { RootState } from "@/app/store";
 
 export interface SearchState {
@@ -10,14 +10,14 @@ const initialState: SearchState = {
     searchInput: "",
 }
 
-export const searchSlice = createSlice({
+export const searchSlice: Slice = createSlice({
     name: "search",
     initialState,
     reducers: {
         setSearchInput: (state, action: PayloadAction<string>) => {
             state.searchInput = action.payload.trim()
         },
-        clearSearchInput: (state: RootState) => {
+        clearSearchInput: (state) => {
             state.searchInput = ""
         }
     },
@@ -32,4 +32,4 @@ export const selectInput = (state: RootState) => state.search.searchInput;
 
 export const selectStatus = (state: RootState) => state.search.status;
 
-export default searchSlice.reducer;
+export const searchReducer = searchSlice.reducer;
