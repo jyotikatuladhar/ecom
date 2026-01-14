@@ -2,13 +2,14 @@ import { baseApi } from "@/app/api/baseApi";
 import type { CategoryListResponseDto, ProductListResponseDto } from "./catalog.dto";
 import { mapCategoryDtoToCategory, mapProductDtoToProduct } from "./catalog.mapper";
 import type { Category, ProductList } from "./catalog.model";
+import type { PageList } from "@/router";
 
 type ProductListArgs = {
+    listType: PageList,
     category?: string,
+    searchParams?: URLSearchParams,
     limit?: number,
     skip?: number,
-    search?: string,
-    searchParams?: URLSearchParams
 }
 
 const catalogApi = baseApi.injectEndpoints({
@@ -22,18 +23,29 @@ const catalogApi = baseApi.injectEndpoints({
             providesTags: ["Category"]
         }),
         getProducts: builder.query<ProductList, ProductListArgs>({
-            query: ({ category, searchParams }) => {
+            query: ({ listType, category, searchParams }) => {
                 // add cases if other filters are added
-                const url = category
-                    ? `products/category/${category}`
-                    : 'products'
-                if (searchParams) {
-                    return {
-                        url,
-                        params: searchParams
+                switch (listType) {
+                    case "CategoryProducts": {
+                        const url = `products/category/${category}`
+                        if (searchParams) {
+                            return {
+                                url,
+                                params: searchParams
+                            }
+                        }
+                        else return url;
+                    }
+                    case "ProductSearch": {
+                        return {
+                            url: `products/search`,
+                            params: searchParams
+                        }
+                    }
+                    case "ProductList": {
+                        return 'products'
                     }
                 }
-                else return url;
             },
             transformResponse: (response: ProductListResponseDto) => {
                 // console.log('products response: ', response);

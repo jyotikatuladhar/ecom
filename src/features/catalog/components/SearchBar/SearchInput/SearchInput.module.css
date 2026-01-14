@@ -1,14 +1,14 @@
 /* @reference "tailwindcss"; */
 
-.searchBox {
+.searchBoxWrapper {
     position: relative;
-
+    /* flex: 1 1 400px; */
+    min-width: 400px;
 }
 
 .searchInput {
     padding: 4px;
     outline: none;
-    width: 400px;
     /* width: 100%; */
     /* flex: 1; */
 }
@@ -20,18 +20,58 @@
     width: 100%;
     opacity: 0;
     transform: translateY(-10px);
-    transition: transform 150ms ease-in;
-    padding: 10px;
-    background-color: rgb(230, 230, 230);
-    border-radius: 8px;
-    max-height: 200px;
+    transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-md);
+    max-height: 220px;
     overflow-y: scroll;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+    box-shadow: rgb(var(--color-boxShadow));
 }
 
-.searchBox.active>.searchOptions {
+.searchBoxWrapper.active>.searchOptions {
     opacity: 1;
     transform: scaleY(0px);
+    transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
     background-color: white;
     z-index: 50;
 }
+
+.productItemWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    /* cursor: pointer; */
+    margin: 4px;
+    padding: 4px;
+}
+
+/* .productItemWrapper:hover {
+    background-color: rgb(var(--color-bg-hover));
+} */
+
+.productImg {
+    width: 75px;
+}
+
+.productDescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.productTitle {
+    cursor: pointer;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-base);
+}
+
+.productPrice {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: medium;
+}
+
+.addToCart {}

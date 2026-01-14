@@ -59,25 +59,27 @@
     left: -150%;
     opacity: 0;
     transform: translateY(-10px);
-    transition: transform 150ms ease-in;
-    z-index: 50;
-    border: 1px solid #ddd;
-    box-shadow: #838282;
-    border-radius: 8px;
+    transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+    z-index: 500;
+    background-color: white;
+    border: 1px solid rgb(var(--color-border));
+    box-shadow: rgb(var(--color-boxShadow));
+    border-radius: var(--radius-md);
+    pointer-events: none;
 }
 
-.sortBy:focus+.sortOptions {
+.sortMenu.active>.sortOptions {
     opacity: 1;
     transform: translateY(0px);
+    pointer-events: all;
+    cursor: pointer;
 }
 
 .sortOptions>ul>li {
     padding: 8px 10px;
     background: white;
-
 }
 
-.sortOptions>ul>li:hover {
-    background: rgb(230, 230, 230);
-    ;
+.sortOptions>li:hover {
+    background-color: rgb(var(--color-bg-hover));
 }
