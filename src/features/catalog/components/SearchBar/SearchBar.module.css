@@ -1,8 +1,13 @@
-@reference "tailwindcss";
+/* @reference "tailwindcss";
 
 @layer components {
-    .wrapper {
-        @apply flex justify-between items-center mt-3
-    }
+  
 
+} */
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
 }

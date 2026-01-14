@@ -4,19 +4,21 @@ import { useEffect, useRef, useState, } from "react"
 import type { ChangeEventHandler, ChangeEvent, KeyboardEventHandler, SyntheticEvent } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectInput, setSearchInput } from "./searchSlice";
-import { useLazySearchProductsQuery } from "@/features/catalog/api/catalogApi";
+import { useLazyGetProductsQuery, useLazySearchProductsQuery } from "@/features/catalog/api/catalogApi";
 import { Loading } from "@/components/Loading";
 import { EmptyState } from "@/components/EmptyState";
 import { useNavigate } from "react-router-dom";
+import type { Product } from "@/features/catalog/api/catalog.model";
 
 export const SearchInput = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState<boolean>(false)
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const timeoutRef = useRef<number>(null)
 
     const dispatch = useAppDispatch();
 
-    const [triggerSearchProducts, { data: searchResults, isUninitialized, isLoading, reset }] = useLazySearchProductsQuery();
+    const [triggerGetProducts, { data: searchResults, isUninitialized, isLoading, reset }] = useLazyGetProductsQuery();
 
 
     useEffect(() => {
@@ -26,39 +28,75 @@ export const SearchInput = () => {
             }
         }
         document.addEventListener('mousedown', handler);
-        return () => document.removeEventListener('mousedown', handler)
+        return () => {
+            document.removeEventListener('mousedown', handler);
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+            }
+        }
     }, [])
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e: ChangeEvent<HTMLInputElement>) => {
         // implement debounce input
-        const input = e.target.value;
-        if (input.length > 3) {
-            dispatch(setSearchInput(e.target.value))
+        const nextValue = e.target.value;
+        dispatch(setSearchInput(nextValue))
+
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current)
         }
+
+        timeoutRef.current = setTimeout(() => {
+            if (nextValue.trim()) {
+                const searchParams: URLSearchParams = new URLSearchParams();
+                searchParams.set('q', nextValue)
+                searchParams.set('limit', '10')
+                triggerGetProducts({
+                    listType: "ProductSearch",
+                    searchParams
+                })
+            }
+        }, 400)
     }
 
     const handleSearch = (value: string) => {
-        // console.log(value);
-        // dispatch(searchAsync(value))
         const searchParams = new URLSearchParams();
         searchParams.set('q', value)
-        searchParams.set('limit', '10')
-        // navigate(`/products/search?${searchParams.toString()}`)
-        triggerSearchProducts({ searchParams })
+        navigate(`/search?${searchParams.toString()}`)
     }
 
-    const SearchResults = () => <ul>
-        {
-            searchResults?.items.map(product => {
-                return <li>{product.productName}</li>
-            })
+    const SearchResults = () => {
+        if (searchResults?.items.length) {
+            return <ul>
+                {
+                    searchResults.items.map(product => {
+                        return <ProductItem product={product} />
+                    })
+                }
+            </ul>
+        } else {
+            return <EmptyState />
         }
-    </ul>
+    }
+
+    const ProductItem = ({ product }: { product: Product }) => <li className={`${styles.productItemWrapper} transition-all`}>
+        <img src={product.image} alt={product.productName}
+            className={styles.productImg} />
+        <div className={styles.productDescription}>
+            <div className={styles.productTitle}>{product.productName}</div>
+            <div className="text-textMuted text-sm capitalize">{product.category}</div>
+        </div>
+
+        <div className={styles.productPrice}>
+            ${product.price}
+            <span className="line-through ml-1">
+                ${product.originalPrice}
+            </span>
+        </div>
+        <button className={`btn ${styles.addToCart}`}>Add</button>
+    </li>
 
     let searchContent;
-    if (isUninitialized) {
-        searchContent = <EmptyState />
-    } else if (isLoading) {
+    if (isLoading) {
         searchContent = <Loading />
     } else if (searchResults) {
         searchContent = <SearchResults />
@@ -67,20 +105,27 @@ export const SearchInput = () => {
     }
 
 
-    return <div className={`${styles.searchBox} ${open ? styles.active : ""}`}
+    return <div className={`${styles.searchBoxWrapper} ${open ? styles.active : ""}`}
         ref={dropdownRef}>
         <Input.Search onClick={() => setOpen(true)}
             // onBlur={() => setOpen(false)}
+            allowClear
             size="large"
             // variant="borderless"
-            placeholder="Search Products" className={styles.searchInput}
+            placeholder="Search Products"
+            className={styles.searchInput}
             onChange={handleInputChange}
             onSearch={handleSearch}
             onClear={reset}
         />
         {/* Dropdown */}
-        <div className={`${styles.searchOptions} `}>
-            {searchContent}
-        </div>
+        {
+            !isUninitialized
+                ? <div className={`${styles.searchOptions} `}>
+                    {searchContent}
+                </div>
+                : null
+        }
+
     </div>
 }

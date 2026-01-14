@@ -2,11 +2,13 @@
     /* Base Colors */
     --color-bg: 255 255 255;
     --color-bg-muted: 248 250 252;
+    --color-bg-hover: 230 230 230;
 
     --color-text: 17 24 39;
     --color-text-muted: 107 114 128;
 
-    --color-border: 229 231 235;
+    --color-border: 221, 221, 221;
+    --color-boxShadow: 130 130 130;
 
     /* Brand (Green) */
     --color-primary: 129 175 59;
@@ -23,5 +25,4 @@
     --radius-md: 8px;
     --radius-lg: 12px;
 
-    -color-text: 129 175 59;
 }
