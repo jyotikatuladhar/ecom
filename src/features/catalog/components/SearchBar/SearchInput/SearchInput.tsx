@@ -61,6 +61,7 @@ export const SearchInput = () => {
     const handleSearch = (value: string) => {
         const searchParams = new URLSearchParams();
         searchParams.set('q', value)
+        setOpen(false);
         navigate(`/search?${searchParams.toString()}`)
     }
 
