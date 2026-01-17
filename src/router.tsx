@@ -13,6 +13,7 @@ export const router = createHashRouter([
             { index: true, element: <CatalogPage listType="ProductList" /> },
             { path: "/category/:slug", element: <CatalogPage listType={"CategoryProducts"} /> },
             { path: "/search", element: <CatalogPage listType="ProductSearch" /> },
+            { path: "/products/:id", element: <div>Product Detail</div> },
             { path: "*", element: <NotFoundPage /> }
         ]
     }

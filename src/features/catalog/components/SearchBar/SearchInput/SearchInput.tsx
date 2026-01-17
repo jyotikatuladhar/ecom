@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, } from "react"
 import type { ChangeEventHandler, ChangeEvent, KeyboardEventHandler, SyntheticEvent } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectInput, setSearchInput } from "./searchSlice";
-import { useLazyGetProductsQuery, useLazySearchProductsQuery } from "@/features/catalog/api/catalogApi";
+import { useLazyGetProductsQuery } from "@/features/catalog/api/catalogApi";
 import { Loading } from "@/components/Loading";
 import { EmptyState } from "@/components/EmptyState";
 import { useNavigate } from "react-router-dom";
