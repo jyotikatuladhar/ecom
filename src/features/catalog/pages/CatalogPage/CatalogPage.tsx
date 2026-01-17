@@ -2,12 +2,12 @@ import { Loading } from "@/components/Loading";
 import { useLazyGetProductsQuery } from "../../api/catalogApi";
 import { ProductGrid } from "../../components/ProductGrid/ProductGrid";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styles from "./CatalogPage.module.css"
 import { EmptyState } from "@/components/EmptyState";
 import { SortAscIcon, SortDescIcon } from "lucide-react";
-import type { MenuItem, QueryData, SearchParams } from "./CatalogPage.types";
+import type { MenuItem, SearchParams } from "./CatalogPage.types";
 import type { PageList } from "@/router";
 
 type CatalogProps = {
@@ -15,15 +15,27 @@ type CatalogProps = {
 }
 
 const CatalogPage = ({ listType }: CatalogProps) => {
-    let content: React.ReactNode;
     const navigate = useNavigate();
     const { slug: category } = useParams();
     const [searchParams] = useSearchParams();
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const [triggerProductList, productListResult] = useLazyGetProductsQuery();
-    const { data, isLoading, isUninitialized, } = productListResult;
+
+
+    // const { data: infiniteList, fetchNextPage, isFetching } = useGetPageProductsInfiniteQuery("", {
+    //     initialPageParam: 1,
+
+    // });
+
+    // useEffect(() => {
+    //     console.log('infiniteList: ', infiniteList);
+    //     const { pages, pageParams } = infiniteList;
+    //     pages.forEach(page => {
+    //         const { skip, products } = page;
+
+    //     })
+    // }, [infiniteList])
 
     useEffect(() => {
         const handler = (e: MouseEvent) => {
@@ -34,50 +46,6 @@ const CatalogPage = ({ listType }: CatalogProps) => {
         document.addEventListener('mousedown', handler);
         return () => document.removeEventListener('mousedown', handler)
     }, [])
-
-    useEffect(() => {
-        if (listType)
-            triggerProductList(getQueryData())
-    }, [listType])
-
-    const getQueryData = (): QueryData => {
-        switch (listType) {
-            case "CategoryProducts": {
-                return {
-                    listType,
-                    category,
-                    searchParams
-                }
-            }
-            case "ProductSearch": {
-                return {
-                    listType,
-                    searchParams
-                }
-            }
-            case "ProductList": {
-                return {
-                    listType,
-                    searchParams
-                }
-            }
-            default: {
-                return {
-                    listType
-                }
-            }
-        }
-    }
-
-    if (isUninitialized) {
-        content = <EmptyState />
-    } else if (isLoading) {
-        content = <Loading />
-    } else if (data) {
-        content = <ProductGrid data={data} />
-    } else {
-        content = <EmptyState />
-    }
 
 
     const handleMenuClick = (params: SearchParams) => {
@@ -144,7 +112,8 @@ const CatalogPage = ({ listType }: CatalogProps) => {
                     Filters
                 </aside>
                 <main className={styles.products}>
-                    {content}
+                    <ProductGrid listType={listType} />
+                    {/* <button onClick={fetchNextPage}> Load More</button> */}
                 </main>
             </div>
         </section>

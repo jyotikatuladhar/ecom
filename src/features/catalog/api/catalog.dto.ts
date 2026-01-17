@@ -15,6 +15,11 @@ export interface ProductListResponseDto {
     products: ProductDto[];
 }
 
+export interface ProductPageListResponseDto {
+    pageParams: number[],
+    pages: ProductListResponseDto
+}
+
 export interface ProductDto {
     id: number;
     title: string;

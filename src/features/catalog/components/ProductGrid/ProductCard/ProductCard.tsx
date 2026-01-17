@@ -3,6 +3,7 @@ import { Button } from "antd"
 import styles from "./ProductCard.module.css"
 import { HeartIcon, Share2Icon, ShareIcon, ShoppingCartIcon } from "lucide-react"
 import type { Product } from "@/features/catalog/api/catalog.model"
+import { Link } from "react-router-dom"
 
 type ProductCardProps = {
     product: Product
@@ -16,7 +17,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <div className={styles.imageWrapper}>
             {/* Image Section */}
             <div className={styles.image}>
-                <img src={product.image} alt={`Image of ${product.productName}`} />
+                <Link to={`/products/${product.id}`}
+                    aria-label={`Detail Page of ${product.productName}`}
+                >
+                    <img src={product.image} alt={`Image of ${product.productName}`} />
+                </Link>
             </div>
             {
                 product.discountPercent
@@ -43,7 +48,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             <div className={`text-textMuted ${styles.category}`}>{product.category}</div>
             {/* Name */}
             <div className="font-bold">
-                {product.productName}
+                <Link to={`/products/${product.id}`}
+                    aria-label={`Detail Page of ${product.productName}`}
+                >
+                    {product.productName}
+                </Link>
             </div>
             {/* price */}
             <div>

@@ -1,7 +1,7 @@
 
 
 export interface Pagination {
-    total: number,
+    total?: number,
     skip: number,
     limit: number
 }
@@ -10,6 +10,7 @@ export interface ProductList {
     items: Product[],
     pagination: Pagination
 }
+
 
 export interface Product {
     id: number;

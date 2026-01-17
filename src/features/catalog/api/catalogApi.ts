@@ -2,15 +2,7 @@ import { baseApi } from "@/app/api/baseApi";
 import type { CategoryListResponseDto, ProductListResponseDto } from "./catalog.dto";
 import { mapCategoryDtoToCategory, mapProductDtoToProduct } from "./catalog.mapper";
 import type { Category, ProductList } from "./catalog.model";
-import type { PageList } from "@/router";
-
-type ProductListArgs = {
-    listType: PageList,
-    category?: string,
-    searchParams?: URLSearchParams,
-    limit?: number,
-    skip?: number,
-}
+import type { ProductListArgs } from "../pages/CatalogPage/CatalogPage.types";
 
 const catalogApi = baseApi.injectEndpoints({
     endpoints: builder => ({
@@ -23,8 +15,11 @@ const catalogApi = baseApi.injectEndpoints({
             providesTags: ["Category"]
         }),
         getProducts: builder.query<ProductList, ProductListArgs>({
+            query: ({ listType, category, searchParams, pagination }) => {
+                const { skip, limit } = pagination;
+                searchParams.set('skip', skip.toString());
+                searchParams.set('limit', limit.toString());
 
-            query: ({ listType, category, searchParams }) => {
                 // add cases if other filters are added
                 switch (listType) {
                     case "CategoryProducts": {
@@ -44,7 +39,10 @@ const catalogApi = baseApi.injectEndpoints({
                         }
                     }
                     case "ProductList": {
-                        return 'products'
+                        return {
+                            url: `products`,
+                            params: searchParams
+                        }
                     }
                 }
             },
@@ -61,8 +59,47 @@ const catalogApi = baseApi.injectEndpoints({
             },
             providesTags: ["Product"]
         }),
+        // getPageProducts: builder.infiniteQuery<ProductList, void, number>({
+        //     infiniteQueryOptions: {
+        //         initialPageParam: 1,
+        //         maxPages: 4,
+        //         getNextPageParam: (
+        //             lastPage,
+        //             allPages,
+        //             lastPageParam,
+        //             allPageParams,
+        //             queryArg
+        //         ) => { return lastPageParam + 1 },
+        //         getPreviousPageParam: (
+        //             firstPage,
+        //             allPages,
+        //             firstPageParam,
+        //             allPageParams,
+        //             queryArg
+        //         ) => {
+        //             return firstPageParam > 0 ? firstPageParam - 1 : undefined
+        //         }
+        //     },
+        //     query: ({ queryArg, pageParam }) => {
+        //         console.log('queryArg, pageParam: ', queryArg, pageParam);
+        //         return `/products?limit=10&skip=${pageParam * 10}`
+        //     },
+        //     transformResponse: (response: ProductListResponseDto) => {
+        //         // console.log('products response: ', response);
+        //         return {
+        //             items: response.products.map(mapProductDtoToProduct),
+        //             pagination: {
+        //                 total: response.total,
+        //                 limit: response.limit,
+        //                 skip: response.skip
+        //             }
+        //         }
+        //     },
+        // })
 
     })
 })
 
-export const { useGetCategoriesQuery, useLazyGetProductsQuery } = catalogApi;
+export const { useGetCategoriesQuery, useLazyGetProductsQuery,
+    // useGetPageProductsInfiniteQuery
+} = catalogApi;

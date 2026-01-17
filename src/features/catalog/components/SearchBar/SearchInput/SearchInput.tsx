@@ -1,10 +1,10 @@
 import { Input } from "antd"
 import styles from "./SearchInput.module.css"
-import { useEffect, useRef, useState, } from "react"
+import { useEffect, useMemo, useRef, useState, } from "react"
 import type { ChangeEventHandler, ChangeEvent, KeyboardEventHandler, SyntheticEvent } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectInput, setSearchInput } from "./searchSlice";
-import { useLazyGetProductsQuery, useLazySearchProductsQuery } from "@/features/catalog/api/catalogApi";
+import { useLazyGetProductsQuery } from "@/features/catalog/api/catalogApi";
 import { Loading } from "@/components/Loading";
 import { EmptyState } from "@/components/EmptyState";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,14 @@ export const SearchInput = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const timeoutRef = useRef<number>(null)
 
+    const limit = 10;
+    const [page, setPage] = useState(1);
+    const pagination = useMemo(() => {
+        return {
+            limit,
+            skip: (page - 1) * limit
+        }
+    }, [page]);
     const dispatch = useAppDispatch();
 
     const [triggerGetProducts, { data: searchResults, isUninitialized, isLoading, reset }] = useLazyGetProductsQuery();
@@ -52,7 +60,8 @@ export const SearchInput = () => {
                 searchParams.set('limit', '10')
                 triggerGetProducts({
                     listType: "ProductSearch",
-                    searchParams
+                    searchParams,
+                    pagination
                 })
             }
         }, 400)
